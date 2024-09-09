@@ -18,4 +18,10 @@ export const aiModels: AIModel[] = [
     models: ['claude-3-5-sonnet-20240620', 'claude-3-opus-20240229', 'claude-3-sonnet-20240229', 'claude-3-haiku-20240307'],
     apiKey: process.env.REACT_APP_ANTHROPIC_API_KEY,
   },
+  {
+    id: 'google',
+    name: 'Google',
+    models: ['gemini-1.5-flash-001', 'gemini-1.5-pro-001', 'gemini-1.0-pro-002', ],
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+  },
 ];

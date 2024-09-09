@@ -1,6 +1,7 @@
 import { AIModel } from '../models/aiModels';
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const callAIModel = async (
   model: AIModel,
@@ -13,6 +14,8 @@ export const callAIModel = async (
         return await callOpenAI(specificModel, model.apiKey!, conversation);
       case 'anthropic':
         return await callAnthropic(specificModel, model.apiKey!, conversation);
+      case 'google': // Add Gemini as an option
+        return await callGoogle(specificModel, model.apiKey!, conversation);
       default:
         throw new Error('Unknown AI model');
     }
@@ -78,5 +81,34 @@ const callAnthropic = async (model: string, apiKey: string, messages: { role: st
   } catch (error) {
     console.error('Error in callClaude:', error);
     throw new Error('Failed to get response from Claude');
+  }
+};
+
+const callGoogle = async (model: string, apiKey: string, messages: { role: string; content: string }[]): Promise<string> => {
+
+  const configuration = new GoogleGenerativeAI(apiKey);
+  const gemini = configuration.getGenerativeModel({ model: model });
+
+  try {
+    const currentMessages = messages.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: msg.content }]
+    }));
+
+    const chat = gemini.startChat({
+      history: currentMessages,
+      generationConfig: {
+        maxOutputTokens: 1000,
+      },
+    });
+
+    const result = await chat.sendMessage(messages[messages.length - 1].content);
+    const response = await result.response;
+    const responseText = response.text();
+
+    return responseText || 'No response from Gemini';
+  } catch (error) {
+    console.error('Error in callGemini:', error);
+    throw new Error('Failed to get response from Gemini');
   }
 };
