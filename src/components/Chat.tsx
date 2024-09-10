@@ -56,7 +56,7 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex flex-row gap-2 rounded shadow-xl h-full">
-      <div className="h-full border border-white rounded-xl p-2">
+      <div className="h-full border border-white rounded-xl p-4">
         {/* Model Selector */}
         <OptionsPicker 
           onPromptChange={handlePromptChange}
@@ -85,7 +85,7 @@ const Chat: React.FC = () => {
           <input
             type="text"
             className="w-full p-2 border border-white bg-background-gray rounded"
-            placeholder="Type your message"
+            placeholder={`Message ${selectedSpecificModel}${selectedPrompt.name != 'Default' ? ` as a ${selectedPrompt.name}` : ''}`}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             disabled={isLoading}

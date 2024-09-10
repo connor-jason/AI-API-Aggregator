@@ -44,9 +44,9 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
   };
 
   return (
-    <div className="mb-4">
+    <div className="flex flex-col gap-4">
       {/* Provider Selector */}
-      <div className="mb-4">
+      <div className="">
         <label className="block font-bold mb-2">Provider:</label>
         <select
           className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
