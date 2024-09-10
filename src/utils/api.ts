@@ -1,4 +1,4 @@
-import { AIModel } from '../models/aiModels';
+import { AIModel, Prompt } from '../models/aiModels';
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -58,8 +58,8 @@ const callAnthropic = async (model: string, apiKey: string, messages: { role: st
       model: model,
       max_tokens: 1000,
       temperature: 0,
-      system: "You are a helpful assistant.",
-      messages: messages.map(msg => ({
+      system: messages[0].content,
+      messages: messages.slice(1).map(msg => ({
         role: msg.role === 'assistant' ? 'assistant' : 'user',
         content: msg.content
       }))
