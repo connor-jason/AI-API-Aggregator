@@ -14,7 +14,7 @@ export const callAIModel = async (
         return await callOpenAI(specificModel, model.apiKey!, conversation);
       case 'anthropic':
         return await callAnthropic(specificModel, model.apiKey!, conversation);
-      case 'google': // Add Gemini as an option
+      case 'google':
         return await callGoogle(specificModel, model.apiKey!, conversation);
       default:
         throw new Error('Unknown AI model');
@@ -65,13 +65,11 @@ const callAnthropic = async (model: string, apiKey: string, messages: { role: st
       }))
     });
 
-    // Extract the content from the response
     const content = response.content;
     if (content.length === 0) {
       return 'No response from Claude';
     }
 
-    // Combine all text blocks into a single string
     const responseText = content
       .filter(block => block.type === 'text')
       .map(block => (block as { text: string }).text)

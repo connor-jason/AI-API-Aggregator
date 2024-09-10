@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { callAIModel } from '../utils/api';
-import { AIModel, aiModels } from '../models/aiModels';
-import ModelSelector from './ModelSelector';
+import { AIModel, aiModels, Prompt, prompts } from '../models/aiModels';
+import ModelSelector from './OptionsPicker';
 
 export interface Message {
   role: string;
@@ -9,12 +9,13 @@ export interface Message {
 }
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<AIModel>(aiModels[0]);
   const [selectedSpecificModel, setSelectedSpecificModel] = useState<string>(aiModels[0].models[0]);
+  const [selectedPrompt, setPrompt] = useState<Prompt>(prompts[0]);
+  const [messages, setMessages] = useState<Message[]>([{ role: 'system', content: selectedPrompt.prompt }]);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -48,10 +49,17 @@ const Chat: React.FC = () => {
     setSelectedSpecificModel(specificModel);
   };
 
+  const handlePromptChange = (prompt: Prompt) => {
+    setPrompt(prompt);
+    setMessages([{ role: 'system', content: prompt.prompt }, ...messages.slice(1)]);
+  }
+
   return (
     <div className="p-4 bg-white rounded shadow">
       {/* Model Selector */}
       <ModelSelector 
+        onPromptChange={handlePromptChange}
+        selectedPrompt={selectedPrompt}
         selectedModel={selectedModel} 
         selectedSpecificModel={selectedSpecificModel}
         onModelChange={handleModelChange}
@@ -59,7 +67,7 @@ const Chat: React.FC = () => {
 
       {/* Chat Messages */}
       <div className="h-64 overflow-y-auto bg-gray-100 p-4 rounded mb-4">
-        {messages.map((msg, idx) => (
+        {messages.slice(1).map((msg, idx) => (
           <div key={idx} className="mb-2">
             <strong>{msg.role === 'user' ? 'You:' : 'AI:'}</strong> {msg.content}
           </div>
