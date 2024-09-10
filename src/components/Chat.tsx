@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { callAIModel } from '../utils/api';
 import { AIModel, aiModels, Prompt, prompts } from '../models/aiModels';
-import ModelSelector from './OptionsPicker';
+import OptionsPicker from './OptionsPicker';
 
 export interface Message {
   role: string;
@@ -55,48 +55,52 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <div className="p-4 bg-white rounded shadow">
-      {/* Model Selector */}
-      <ModelSelector 
-        onPromptChange={handlePromptChange}
-        selectedPrompt={selectedPrompt}
-        selectedModel={selectedModel} 
-        selectedSpecificModel={selectedSpecificModel}
-        onModelChange={handleModelChange}
-      />
-
-      {/* Chat Messages */}
-      <div className="h-64 overflow-y-auto bg-gray-100 p-4 rounded mb-4">
-        {messages.slice(1).map((msg, idx) => (
-          <div key={idx} className="mb-2">
-            <strong>{msg.role === 'user' ? 'You:' : 'AI:'}</strong> {msg.content}
-          </div>
-        ))}
-        {error && (
-          <div className="text-red-500">
-            <strong>Error:</strong> {error}
-          </div>
-        )}
+    <div className="flex flex-row gap-2 rounded shadow-xl h-full">
+      <div className="h-full border border-white rounded-xl p-2">
+        {/* Model Selector */}
+        <OptionsPicker 
+          onPromptChange={handlePromptChange}
+          selectedPrompt={selectedPrompt}
+          selectedModel={selectedModel} 
+          selectedSpecificModel={selectedSpecificModel}
+          onModelChange={handleModelChange}
+        />
       </div>
-
-      {/* User Input */}
-      <input
-        type="text"
-        className="w-full p-2 mb-2 border rounded"
-        placeholder="Type your message"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-        disabled={isLoading}
-      />
-      
-      {/* Send Button */}
-      <button
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-        onClick={sendMessage}
-        disabled={isLoading}
-      >
-        {isLoading ? 'Sending...' : 'Send'}
-      </button>
+      <div className="flex flex-col border border-white rounded-xl h-full w-full p-4">
+        {/* Chat Messages */}
+        <div className="overflow-y-auto rounded mb-4 h-full">
+          {messages.slice(1).map((msg, idx) => (
+            <div key={idx} className="mb-2">
+              <strong>{msg.role === 'user' ? 'You:' : 'AI:'}</strong> {msg.content}
+            </div>
+          ))}
+          {error && (
+            <div className="text-red-500">
+              <strong>Error:</strong> {error}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-row gap-2">
+          {/* User Input */}
+          <input
+            type="text"
+            className="w-full p-2 border border-white bg-background-gray rounded"
+            placeholder="Type your message"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            disabled={isLoading}
+          />
+          
+          {/* Send Button */}
+          <button
+            className="px-4 bg-blue-500 text-white rounded h-10"
+            onClick={sendMessage}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Sending...' : 'Send'}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

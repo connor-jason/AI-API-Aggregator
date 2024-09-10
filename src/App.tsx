@@ -4,10 +4,8 @@ import Chat from './components/Chat';
 const App: React.FC = () => {
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-lg mx-auto">
-        <Chat />
-      </div>
+    <div className="min-h-screen h-screen max-h-screen p-2">
+      <Chat />
     </div>
   );
 };

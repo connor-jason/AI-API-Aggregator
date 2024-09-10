@@ -1,4 +1,4 @@
-import { AIModel, Prompt } from '../models/aiModels';
+import { AIModel } from '../models/aiModels';
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -101,8 +101,7 @@ const callGoogle = async (model: string, apiKey: string, messages: { role: strin
     });
 
     const result = await chat.sendMessage(messages[messages.length - 1].content);
-    const response = await result.response;
-    const responseText = response.text();
+    const responseText = result.response.text();
 
     return responseText || 'No response from Gemini';
   } catch (error) {

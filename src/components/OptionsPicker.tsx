@@ -9,7 +9,7 @@ type ModelSelectorProps = {
   onPromptChange: (prompt: Prompt) => void;
 };
 
-const ModelSelector: React.FC<ModelSelectorProps> = ({ 
+const OptionsPicker: React.FC<ModelSelectorProps> = ({ 
   selectedPrompt,
   selectedModel, 
   selectedSpecificModel, 
@@ -47,9 +47,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
     <div className="mb-4">
       {/* Provider Selector */}
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Provider:</label>
+        <label className="block font-bold mb-2">Provider:</label>
         <select
-          className="block w-full p-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={selectedModel.id}
           onChange={handleModelChange}
         >
@@ -62,9 +62,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       </div>
       {/* Model Selector */}
       <div>
-        <label className="block text-gray-700 font-bold mb-2">Model:</label>
+        <label className="block font-bold mb-2">Model:</label>
         <select
-          className="block w-full p-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={selectedSpecificModel}
           onChange={(e) => {
             onModelChange(selectedModel, e.target.value);
@@ -79,9 +79,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       </div>
       {/* Prompt Picker */}
       <div>
-        <label className="block text-gray-700 font-bold mb-2">Prompt:</label>
+        <label className="block font-bold mb-2">Prompt:</label>
         <select
-          className="block w-full p-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={selectedPrompt.name}
           onChange={handlePromptChange}
         >
@@ -96,4 +96,4 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
   );
 };
 
-export default ModelSelector;
+export default OptionsPicker;
