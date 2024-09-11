@@ -60,7 +60,7 @@ const Chat: React.FC = () => {
     <>
       {/* OptionsPicker is hidden by default on mobile, but shown when the hamburger is clicked */}
       {isOptionsOpen && (
-        <div className="w-full md:hidden p-4 border border-white rounded-xl">
+        <div className="w-full min-h-[49%] md:hidden p-4 border border-white rounded-xl">
           <div className="p-2">
             <button
               onClick={() => setIsOptionsOpen(!isOptionsOpen)}
@@ -92,7 +92,7 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Chat Section */}
-      <div className={`flex flex-col border border-white rounded-xl h-full w-full p-4 ${isLoading ? 'animate-inner-glow-cycle' : ''}`}>
+      <div className={`flex flex-col border border-white rounded-xl ${isOptionsOpen ? 'max-h-[50%]' : 'h-full'} md:h-full w-full p-4 ${isLoading ? 'animate-inner-glow-cycle' : ''}`}>
         {/* Hamburger for mobile screens */}
         {!isOptionsOpen && (
         <div className="md:hidden p-2">
@@ -107,7 +107,7 @@ const Chat: React.FC = () => {
         )}
         <div className="overflow-y-auto rounded mb-4 h-full">
           {messages.slice(1).map((msg, idx) => (
-            <div key={idx} className="mb-2">
+            <div key={idx} className="mb-4">
               <strong>{msg.role === 'user' ? 'You:' : 'AI:'}</strong> {msg.content}
             </div>
           ))}
