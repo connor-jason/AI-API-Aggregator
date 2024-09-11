@@ -92,7 +92,7 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Chat Section */}
-      <div className="flex flex-col border border-white rounded-xl h-full w-full p-4">
+      <div className={`flex flex-col border border-white rounded-xl h-full w-full p-4 ${isLoading ? 'animate-inner-glow-cycle' : ''}`}>
         {/* Hamburger for mobile screens */}
         {!isOptionsOpen && (
         <div className="md:hidden p-2">
@@ -120,14 +120,14 @@ const Chat: React.FC = () => {
         <div className="flex flex-row gap-2">
           <input
             type="text"
-            className="w-full p-2 border border-white bg-background-gray rounded"
-            placeholder={`Message ${selectedSpecificModel}${selectedPrompt.name != 'Default' ? ` as a ${selectedPrompt.name}` : ''}`}
+            className="w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:animate-outer-glow-cycle transition-shadow duration-300"
+            placeholder={`Message ${selectedSpecificModel}${selectedPrompt.name !== 'Default' ? ` as a ${selectedPrompt.name}` : ''}`}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             disabled={isLoading}
           />
           <button
-            className="px-4 bg-blue-500 text-white rounded h-10"
+            className="px-4 border border-white text-white rounded h-10 hover:animate-outer-glow-cycle transition-shadow duration-300"
             onClick={sendMessage}
             disabled={isLoading}
           >

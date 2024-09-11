@@ -49,7 +49,7 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
       <div className="">
         <label className="block font-bold mb-2">Provider:</label>
         <select
-          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:animate-outer-glow-cycle transition-shadow duration-300lg"
           value={selectedModel.id}
           onChange={handleModelChange}
         >
@@ -64,7 +64,7 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
       <div>
         <label className="block font-bold mb-2">Model:</label>
         <select
-          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:animate-outer-glow-cycle transition-shadow duration-300lg"
           value={selectedSpecificModel}
           onChange={(e) => {
             onModelChange(selectedModel, e.target.value);
@@ -81,7 +81,7 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
       <div>
         <label className="block font-bold mb-2">Prompt:</label>
         <select
-          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="block w-full p-2 border border-white bg-background-gray rounded focus:outline-none focus:animate-outer-glow-cycle transition-shadow duration-300lg"
           value={selectedPrompt.name}
           onChange={handlePromptChange}
         >
