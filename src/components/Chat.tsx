@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { callAIModel } from '../utils/api';
 import { AIModel, aiModels, Prompt, prompts } from '../models/aiModels';
 import OptionsPicker from './OptionsPicker';
+import { MenuIcon } from '@heroicons/react/outline';
 
 export interface Message {
   role: string;
@@ -16,6 +17,7 @@ const Chat: React.FC = () => {
   const [selectedSpecificModel, setSelectedSpecificModel] = useState<string>(aiModels[0].models[0]);
   const [selectedPrompt, setPrompt] = useState<Prompt>(prompts[0]);
   const [messages, setMessages] = useState<Message[]>([{ role: 'system', content: selectedPrompt.prompt }]);
+  const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false); // State to toggle options visibility
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -52,12 +54,34 @@ const Chat: React.FC = () => {
   const handlePromptChange = (prompt: Prompt) => {
     setPrompt(prompt);
     setMessages([{ role: 'system', content: prompt.prompt }, ...messages.slice(1)]);
-  }
+  };
 
   return (
+    <>
+      {/* OptionsPicker is hidden by default on mobile, but shown when the hamburger is clicked */}
+      {isOptionsOpen && (
+        <div className="w-full md:hidden p-4 border border-white rounded-xl">
+          <div className="p-2">
+            <button
+              onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+              className="text-white focus:outline-none"
+            >
+              {/* Hamburger icon */}
+              <MenuIcon className="h-8 w-8 text-white rotate-90" />
+            </button>
+          </div>
+          <OptionsPicker 
+            onPromptChange={handlePromptChange}
+            selectedPrompt={selectedPrompt}
+            selectedModel={selectedModel} 
+            selectedSpecificModel={selectedSpecificModel}
+            onModelChange={handleModelChange}
+          />
+        </div>
+      )}
     <div className="flex flex-row gap-2 rounded shadow-xl h-full">
-      <div className="h-full border border-white rounded-xl p-4">
-        {/* Model Selector */}
+      {/* Model Selector for desktop */}
+      <div className="hidden md:block h-full border border-white rounded-xl p-4">
         <OptionsPicker 
           onPromptChange={handlePromptChange}
           selectedPrompt={selectedPrompt}
@@ -66,8 +90,21 @@ const Chat: React.FC = () => {
           onModelChange={handleModelChange}
         />
       </div>
+
+      {/* Chat Section */}
       <div className="flex flex-col border border-white rounded-xl h-full w-full p-4">
-        {/* Chat Messages */}
+        {/* Hamburger for mobile screens */}
+        {!isOptionsOpen && (
+        <div className="md:hidden p-2">
+          <button
+            onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+            className="text-white focus:outline-none"
+          >
+            {/* Hamburger icon */}
+            <MenuIcon className="h-8 w-8 text-white" />
+          </button>
+        </div>
+        )}
         <div className="overflow-y-auto rounded mb-4 h-full">
           {messages.slice(1).map((msg, idx) => (
             <div key={idx} className="mb-2">
@@ -81,7 +118,6 @@ const Chat: React.FC = () => {
           )}
         </div>
         <div className="flex flex-row gap-2">
-          {/* User Input */}
           <input
             type="text"
             className="w-full p-2 border border-white bg-background-gray rounded"
@@ -90,8 +126,6 @@ const Chat: React.FC = () => {
             onChange={(e) => setUserInput(e.target.value)}
             disabled={isLoading}
           />
-          
-          {/* Send Button */}
           <button
             className="px-4 bg-blue-500 text-white rounded h-10"
             onClick={sendMessage}
@@ -102,6 +136,7 @@ const Chat: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
