@@ -17,7 +17,7 @@ const Chat: React.FC = () => {
   const [selectedSpecificModel, setSelectedSpecificModel] = useState<string>(aiModels[0].models[0]);
   const [selectedPrompt, setPrompt] = useState<Prompt>(prompts[0]);
   const [messages, setMessages] = useState<Message[]>([{ role: 'system', content: selectedPrompt.prompt }]);
-  const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false); // State to toggle options visibility
+  const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -46,11 +46,13 @@ const Chat: React.FC = () => {
     }
   };
 
+  // When a different model or provider gets chosen, update it
   const handleModelChange = (model: AIModel, specificModel: string) => {
     setSelectedModel(model);
     setSelectedSpecificModel(specificModel);
   };
 
+  // When a new prompt gets chosen, update it
   const handlePromptChange = (prompt: Prompt) => {
     setPrompt(prompt);
     setMessages([{ role: 'system', content: prompt.prompt }, ...messages.slice(1)]);
@@ -58,7 +60,7 @@ const Chat: React.FC = () => {
 
   return (
     <>
-      {/* OptionsPicker is hidden by default on mobile, but shown when the hamburger is clicked */}
+      {/* OptionsPicker is hidden on mobile but shown when the hamburger is clicked */}
       {isOptionsOpen && (
         <div className="w-full min-h-[49%] md:hidden p-4 border border-white rounded-xl">
           <div className="p-2">

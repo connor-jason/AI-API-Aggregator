@@ -29,6 +29,7 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
     setAvailablePrompts(prompts.map(prompt => prompt.name));
   }, []);
 
+  // find and update the model to the selected one
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = aiModels.find((model) => model.id === e.target.value);
     if (selected) {
@@ -36,6 +37,7 @@ const OptionsPicker: React.FC<ModelSelectorProps> = ({
     }
   };
 
+  // find and update the prompt to the selected one
   const handlePromptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPrompt = prompts.find(prompt => prompt.name === e.target.value);
     if (selectedPrompt) {
