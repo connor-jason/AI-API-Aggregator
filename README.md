@@ -1,5 +1,7 @@
 # 🤖 AI API Aggregator 🗨️
 
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/0a3ae182-ae2e-4da7-a4c4-1eb79a450741">
+
 ## 👋 **Intro:**
 - This project is a web application that allows users to chat with various AI models from OpenAI, Anthropic, and Google. You can seamlessly switch between different models mid-conversation, making it easy to compare outputs or find the best model for your needs.
 - The application comes with a variety of built-in prompts optimized for specific tasks, enhancing the AI's performance across different use cases.
@@ -56,6 +58,4 @@ To run the project locally:
 ## 🔒 **Note on API Keys:**
 This project requires API keys from OpenAI, Anthropic, and Google. Ensure you have the necessary permissions and subscriptions from these providers. Never share your API keys publicly or commit them to version control.
 
-## 📸 **Screenshot:**
-<img width="1470" alt="image" src="https://github.com/user-attachments/assets/0a3ae182-ae2e-4da7-a4c4-1eb79a450741">
 
